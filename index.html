@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Private Invitation</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #08090a;
+    color: #f4f4f2;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Subtle technical/motorsport texture */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent 0px,
+            transparent 28px,
+            rgba(255,255,255,0.025) 29px,
+            transparent 30px
+        );
+}
+
+/* Main container */
+
+main {
+    width: min(100%, 760px);
+    min-height: calc(100vh - 70px);
+    margin: auto;
+
+    padding: 8vh 7vw 90px;
+
+    display: flex;
+    align-items: center;
+}
+
+/* Screens */
+
+.screen {
+    display: none;
+    width: 100%;
+
+    animation: enter 0.45s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes enter {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* Small red header */
+
+.eyebrow {
+
+    color: #d71920;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.22em;
+
+    margin-bottom: 22px;
+}
+
+/* Large typography */
+
+h1,
+h2 {
+
+    margin: 0;
+
+    font-weight: 900;
+
+    letter-spacing: -0.05em;
+
+    line-height: 0.9;
+
+    text-transform: uppercase;
+}
+
+h1 {
+
+    font-size: clamp(
+        55px,
+        13vw,
+        110px
+    );
+}
+
+h1 span {
+
+    color: #777d82;
+}
+
+h2 {
+
+    font-size: clamp(
+        48px,
+        11vw,
+        90px
+    );
+}
+
+/* Paragraph */
+
+p {
+
+    max-width: 520px;
+
+    color: #b9bdc1;
+
+    line-height: 1.6;
+
+    margin: 28px 0 36px;
+}
+
+/* Form */
+
+label {
+
+    display: block;
+
+    color: #777d82;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.2em;
+
+    margin: 32px 0 9px;
+}
+
+input,
+textarea {
+
+    width: 100%;
+
+    border: 1px solid #2b2f33;
+
+    border-radius: 0;
+
+    background: #121416;
+
+    color: #f4f4f2;
+
+    padding: 17px;
+
+    font: inherit;
+
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+
+    border-color: #d71920;
+}
+
+/* Main button */
+
+.primary {
+
+    width: 100%;
+
+    min-height: 58px;
+
+    margin-top: 34px;
+
+    border: 0;
+
+    background: #d71920;
+
+    color: white;
+
+    font-weight: 900;
+
+    letter-spacing: 0.12em;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.primary:hover {
+
+    filter: brightness(1.12);
+
+    transform: translateY(-2px);
+}
+
+.primary span {
+
+    float: right;
+
+    font-size: 20px;
+}
+
+/* Back button */
+
+.back {
+
+    margin-top: 17px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #777d82;
+
+    cursor: pointer;
+
+    letter-spacing: 0.08em;
+}
+
+/* Confirmation */
+
+.check {
+
+    width: 56px;
+
+    height: 56px;
+
+    border: 2px solid #d71920;
+
+    display: grid;
+
+    place-items: center;
+
+    color: #d71920;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    margin-bottom: 24px;
+}
+
+small {
+
+    display: block;
+
+    color: #777d82;
+
+    margin-top: 22px;
+
+    line-height: 1.5;
+}
+
+/* Footer */
+
+footer {
+
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 64px;
+
+    padding: 0 7vw;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: #555b60;
+
+    font-size: 10px;
+
+    letter-spacing: 0.16em;
+
+    border-top: 1px solid #181b1e;
+}
+
+</style>
+</head>
+
+<body>
+
+<main>
+
+<!-- FIRST SCREEN -->
+
+<section class="screen active" id="welcome">
+
+    <div class="eyebrow">
+        PRIVATE INVITATION // 001
+    </div>
+
+    <h1>
+        READY<br>
+        <span>WHEN YOU ARE.</span>
+    </h1>
+
+    <p>
+        A simple question.
+        Your answer stays private.
+    </p>
+
+    <button
+        class="primary"
+        onclick="showScreen('schedule')"
+    >
+        CONTINUE
+        <span>→</span>
+    </button>
+
+</section>
+
+
+<!-- DATE / TIME -->
+
+<section class="screen" id="schedule">
+
+    <div class="eyebrow">
+        STEP 01 // AVAILABILITY
+    </div>
+
+    <h2>
+        WHEN ARE<br>
+        YOU FREE?
+    </h2>
+
+    <label for="date">
+        DATE
+    </label>
+
+    <input
+        id="date"
+        type="date"
+    >
+
+    <label for="time">
+        TIME
+    </label>
+
+    <input
+        id="time"
+        type="time"
+    >
+
+    <button
+        class="primary"
+        onclick="nextFromSchedule()"
+    >
+        NEXT
+        <span>→</span>
+    </button>
+
+    <button
+        class="back"
+        onclick="showScreen('welcome')"
+    >
+        ← BACK
+    </button>
+
+</section>
+
+
+<!-- RESPONSE -->
+
+<section class="screen" id="message">
+
+    <div class="eyebrow">
+        STEP 02 // RESPONSE
+    </div>
+
+    <h2>
+        ONE LAST<br>
+        THING.
+    </h2>
+
+    <label for="name">
+        NAME
+    </label>
+
+    <input
+        id="name"
+        type="text"
+        placeholder="Your name"
+    >
+
+    <label for="note">
+        MESSAGE
+    </label>
+
+    <textarea
+        id="note"
+        rows="5"
+        placeholder="Anything you want to say..."
+    ></textarea>
+
+    <button
+        class="primary"
+        onclick="submitResponse()"
+    >
+        SUBMIT RESPONSE
+        <span>→</span>
+    </button>
+
+    <button
+        class="back"
+        onclick="showScreen('schedule')"
+    >
+        ← BACK
+    </button>
+
+</section>
+
+
+<!-- FINISHED -->
+
+<section class="screen" id="done">
+
+    <div class="check">
+        ✓
+    </div>
+
+    <div class="eyebrow">
+        RESPONSE RECEIVED
+    </div>
+
+    <h2>
+        LOCKED<br>
+        IN.
+    </h2>
+
+    <p>
+        Your response has been recorded
+        for this session.
+    </p>
+
+    <small>
+        Private response delivery will be
+        connected in the next setup step.
+    </small>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <span>
+        PRIVATE // 2026
+    </span>
+
+    <span>
+        01
+    </span>
+
+</footer>
+
+
+<script>
+
+function showScreen(id) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(function(screen) {
+
+            screen.classList.remove("active");
+
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo(0, 0);
+}
+
+
+function nextFromSchedule() {
+
+    const date =
+        document.getElementById("date").value;
+
+    const time =
+        document.getElementById("time").value;
+
+    if (!date || !time) {
+
+        alert(
+            "Please choose a date and time first."
+        );
+
+        return;
+    }
+
+    showScreen("message");
+}
+
+
+function submitResponse() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const note =
+        document.getElementById("note").value.trim();
+
+    if (!name) {
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+    }
+
+    if (!note) {
+
+        alert(
+            "Please enter a message."
+        );
+
+        return;
+    }
+
+    /*
+       DEMO ONLY
+
+       We are NOT sending or storing
+       private responses yet.
+
+       The secure response system
+       will be added separately.
+    */
+
+    showScreen("done");
+}
+
+</script>
+
+</body>
+</html>
