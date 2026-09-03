@@ -1,172 +1,510 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+content="#08090a">
 
 <title>Private Invitation</title>
 
 <style>
 
+/* =====================================================
+   CORE
+===================================================== */
+
 * {
     box-sizing: border-box;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    background: #08090a;
-    color: #f4f4f2;
-    font-family: Arial, Helvetica, sans-serif;
+:root {
+
+    --black: #08090a;
+    --dark: #0d0f11;
+    --panel: #14171a;
+    --panel2: #191c20;
+    --white: #f4f4f2;
+    --gray: #969ba0;
+    --muted: #555b61;
+    --line: #292e33;
+    --red: #d71920;
+    --red-dark: #941217;
+
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
+
+    margin: 0;
+
     min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(215,25,32,.08),
+            transparent 30%
+        ),
+        var(--black);
+
+    color: var(--white);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     overflow-x: hidden;
+
 }
 
-/* Subtle technical/motorsport texture */
 
-body::before {
-    content: "";
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.background {
+
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.12;
+    z-index: 0;
+
+}
+
+.grid {
+
+    position: absolute;
+    inset: 0;
+    opacity: .18;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+}
+
+.red-line {
+
+    position: absolute;
+
+    width: 100%;
+    height: 1px;
 
     background:
-        repeating-linear-gradient(
-            135deg,
-            transparent 0px,
-            transparent 28px,
-            rgba(255,255,255,0.025) 29px,
-            transparent 30px
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--red),
+            transparent
         );
+
+    opacity: .45;
+
+    top: 24%;
+
+    transform:
+        rotate(-8deg)
+        scaleX(1.5);
+
 }
 
-/* Main container */
 
-main {
-    width: min(100%, 760px);
-    min-height: calc(100vh - 70px);
-    margin: auto;
+/* =====================================================
+   HEADER
+===================================================== */
 
-    padding: 8vh 7vw 90px;
+header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 70px;
+
+    padding: 0 28px;
 
     display: flex;
+
     align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(8,9,10,.82);
+
+    backdrop-filter:
+        blur(14px);
+
+    z-index: 50;
+
 }
 
-/* Screens */
+.logo {
+
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .18em;
+
+}
+
+.logo span {
+    color: var(--red);
+}
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: .15em;
+
+}
+
+.dot {
+
+    width: 6px;
+    height: 6px;
+
+    background: var(--red);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 12px
+        rgba(215,25,32,.8);
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(100%, 850px);
+
+    min-height: 100vh;
+
+    margin: auto;
+
+    padding: 120px 7vw 110px;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+/* =====================================================
+   SCREENS
+===================================================== */
 
 .screen {
+
     display: none;
+
     width: 100%;
 
-    animation: enter 0.45s ease;
 }
 
 .screen.active {
+
     display: block;
+
+    animation:
+        screenIn .55s
+        cubic-bezier(.2,.8,.2,1);
+
 }
 
-@keyframes enter {
+@keyframes screenIn {
 
     from {
+
         opacity: 0;
-        transform: translateY(20px);
+
+        transform:
+            translateY(25px)
+            scale(.985);
+
     }
 
     to {
+
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0)
+            scale(1);
+
     }
 
 }
 
-/* Small red header */
+
+/* =====================================================
+   TYPOGRAPHY
+===================================================== */
 
 .eyebrow {
 
-    color: #d71920;
+    color: var(--red);
 
-    font-size: 11px;
+    font-size: 10px;
 
-    font-weight: 800;
+    font-weight: 900;
 
-    letter-spacing: 0.22em;
+    letter-spacing: .28em;
 
-    margin-bottom: 22px;
+    margin-bottom: 24px;
+
 }
-
-/* Large typography */
 
 h1,
 h2 {
 
     margin: 0;
 
-    font-weight: 900;
+    font-weight: 950;
 
-    letter-spacing: -0.05em;
+    letter-spacing: -.055em;
 
-    line-height: 0.9;
+    line-height: .86;
 
     text-transform: uppercase;
+
 }
 
 h1 {
 
-    font-size: clamp(
-        55px,
-        13vw,
-        110px
-    );
+    font-size:
+        clamp(
+            58px,
+            13vw,
+            125px
+        );
+
 }
 
 h1 span {
-
-    color: #777d82;
+    color: #737980;
 }
 
 h2 {
 
-    font-size: clamp(
-        48px,
-        11vw,
-        90px
-    );
+    font-size:
+        clamp(
+            50px,
+            11vw,
+            105px
+        );
+
 }
 
-/* Paragraph */
+.description {
 
-p {
+    max-width: 540px;
 
-    max-width: 520px;
+    margin: 30px 0 40px;
 
-    color: #b9bdc1;
+    color: #aeb3b8;
 
-    line-height: 1.6;
+    font-size: 16px;
 
-    margin: 28px 0 36px;
+    line-height: 1.65;
+
 }
 
-/* Form */
+
+/* =====================================================
+   DECORATIVE NUMBER
+===================================================== */
+
+.big-number {
+
+    position: absolute;
+
+    right: 3vw;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size:
+        clamp(
+            180px,
+            28vw,
+            350px
+        );
+
+    font-weight: 900;
+
+    color:
+        rgba(255,255,255,.025);
+
+    pointer-events: none;
+
+    user-select: none;
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.primary {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 64px;
+
+    margin-top: 34px;
+
+    padding: 0 22px;
+
+    border:
+        1px solid
+        var(--red);
+
+    background: var(--red);
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: .2em;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+.primary::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.15),
+            transparent
+        );
+
+    transform:
+        translateX(-100%);
+
+    transition:
+        transform .55s ease;
+
+}
+
+.primary:hover::before {
+    transform: translateX(100%);
+}
+
+.primary:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 35px
+        rgba(215,25,32,.22);
+
+}
+
+.primary:active {
+    transform: translateY(0);
+}
+
+.arrow {
+
+    float: right;
+
+    font-size: 20px;
+
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-grid {
+    margin-top: 35px;
+}
 
 label {
 
     display: block;
 
-    color: #777d82;
+    margin: 28px 0 9px;
 
-    font-size: 10px;
+    color: #777e84;
 
-    font-weight: 800;
+    font-size: 9px;
 
-    letter-spacing: 0.2em;
+    font-weight: 900;
 
-    margin: 32px 0 9px;
+    letter-spacing: .22em;
+
 }
 
 input,
@@ -174,128 +512,239 @@ textarea {
 
     width: 100%;
 
-    border: 1px solid #2b2f33;
+    border:
+        1px solid
+        var(--line);
 
     border-radius: 0;
 
-    background: #121416;
+    background: var(--panel);
 
-    color: #f4f4f2;
+    color: var(--white);
 
-    padding: 17px;
+    padding: 18px;
 
-    font: inherit;
+    font-family: inherit;
+
+    font-size: 15px;
 
     outline: none;
+
+    transition:
+        border-color .2s,
+        background .2s;
+
+}
+
+input:hover,
+textarea:hover {
+    background: var(--panel2);
 }
 
 input:focus,
 textarea:focus {
 
-    border-color: #d71920;
+    border-color: var(--red);
+
+    background: var(--panel2);
+
 }
 
-/* Main button */
+textarea {
 
-.primary {
+    resize: vertical;
 
-    width: 100%;
+    min-height: 130px;
 
-    min-height: 58px;
-
-    margin-top: 34px;
-
-    border: 0;
-
-    background: #d71920;
-
-    color: white;
-
-    font-weight: 900;
-
-    letter-spacing: 0.12em;
-
-    cursor: pointer;
-
-    transition: 0.2s;
 }
 
-.primary:hover {
 
-    filter: brightness(1.12);
-
-    transform: translateY(-2px);
-}
-
-.primary span {
-
-    float: right;
-
-    font-size: 20px;
-}
-
-/* Back button */
+/* =====================================================
+   BACK BUTTON
+===================================================== */
 
 .back {
 
-    margin-top: 17px;
+    display: block;
+
+    margin: 20px auto 0;
 
     border: 0;
 
     background: transparent;
 
-    color: #777d82;
+    color: #686e74;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .14em;
 
     cursor: pointer;
 
-    letter-spacing: 0.08em;
 }
 
-/* Confirmation */
+.back:hover {
+    color: white;
+}
 
-.check {
 
-    width: 56px;
+/* =====================================================
+   PROGRESS
+===================================================== */
 
-    height: 56px;
+.progress {
 
-    border: 2px solid #d71920;
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 35px;
+
+}
+
+.progress-bar {
+
+    width: 45px;
+
+    height: 3px;
+
+    background: var(--line);
+
+}
+
+.progress-bar.active {
+    background: var(--red);
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary {
+
+    margin-top: 35px;
+
+    border-top:
+        1px solid
+        var(--line);
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+}
+
+.summary-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 17px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.05);
+
+}
+
+.summary-row:last-child {
+    border-bottom: 0;
+}
+
+.summary-label {
+
+    color: #666d73;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: .16em;
+
+}
+
+.summary-value {
+
+    color: var(--white);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+/* =====================================================
+   CONFIRMATION
+===================================================== */
+
+.confirm-mark {
+
+    width: 62px;
+    height: 62px;
 
     display: grid;
 
     place-items: center;
 
-    color: #d71920;
+    margin-bottom: 28px;
+
+    border:
+        2px solid
+        var(--red);
+
+    color: var(--red);
 
     font-size: 25px;
 
-    font-weight: bold;
+    font-weight: 900;
 
-    margin-bottom: 24px;
+    animation:
+        pulse 1.7s infinite;
+
 }
 
-small {
+@keyframes pulse {
 
-    display: block;
+    0%,
+    100% {
 
-    color: #777d82;
+        box-shadow:
+            0 0 0
+            rgba(215,25,32,0);
 
-    margin-top: 22px;
+    }
 
-    line-height: 1.5;
+    50% {
+
+        box-shadow:
+            0 0 25px
+            rgba(215,25,32,.2);
+
+    }
+
 }
 
-/* Footer */
+
+/* =====================================================
+   FOOTER
+===================================================== */
 
 footer {
 
     position: fixed;
 
-    bottom: 0;
-
     left: 0;
-
     right: 0;
+    bottom: 0;
 
     height: 64px;
 
@@ -303,160 +752,490 @@ footer {
 
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
 
-    color: #555b60;
+    justify-content: space-between;
 
-    font-size: 10px;
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
 
-    letter-spacing: 0.16em;
+    background:
+        rgba(8,9,10,.88);
 
-    border-top: 1px solid #181b1e;
+    backdrop-filter:
+        blur(10px);
+
+    color: #4d5358;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: .16em;
+
+    z-index: 40;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 0 18px;
+    }
+
+    .header-right {
+        display: none;
+    }
+
+    main {
+        padding: 105px 22px 95px;
+    }
+
+    h1 {
+
+        font-size:
+            clamp(
+                54px,
+                17vw,
+                85px
+            );
+
+    }
+
+    h2 {
+
+        font-size:
+            clamp(
+                48px,
+                15vw,
+                75px
+            );
+
+    }
+
+    .description {
+        font-size: 15px;
+    }
+
+    .big-number {
+        display: none;
+    }
+
+    footer {
+        padding: 0 20px;
+    }
+
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+
+        animation-duration:
+            .01ms !important;
+
+        transition-duration:
+            .01ms !important;
+
+    }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="red-line"></div>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        PRIVATE<span>//</span>01
+
+    </div>
+
+    <div class="header-right">
+
+        <div class="dot"></div>
+
+        INVITATION ACTIVE
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
 <main>
 
-<!-- FIRST SCREEN -->
 
-<section class="screen active" id="welcome">
+<!-- =====================================================
+     SCREEN 1
+===================================================== -->
+
+<section
+    class="screen active"
+    id="welcome"
+>
+
+    <div class="big-number">
+        01
+    </div>
 
     <div class="eyebrow">
         PRIVATE INVITATION // 001
     </div>
 
     <h1>
+
         READY<br>
-        <span>WHEN YOU ARE.</span>
+
+        <span>
+            WHEN YOU ARE.
+        </span>
+
     </h1>
 
-    <p>
+    <p class="description">
+
         A simple question.
-        Your answer stays private.
+        A simple answer.
+        Take your time.
+
     </p>
 
     <button
         class="primary"
         onclick="showScreen('schedule')"
     >
+
         CONTINUE
-        <span>→</span>
+
+        <span class="arrow">
+            →
+        </span>
+
     </button>
 
 </section>
 
 
-<!-- DATE / TIME -->
+<!-- =====================================================
+     SCREEN 2
+===================================================== -->
 
-<section class="screen" id="schedule">
+<section
+    class="screen"
+    id="schedule"
+>
+
+    <div class="progress">
+
+        <div class="progress-bar active"></div>
+
+        <div class="progress-bar"></div>
+
+        <div class="progress-bar"></div>
+
+    </div>
 
     <div class="eyebrow">
         STEP 01 // AVAILABILITY
     </div>
 
     <h2>
+
         WHEN ARE<br>
         YOU FREE?
+
     </h2>
 
-    <label for="date">
-        DATE
-    </label>
 
-    <input
-        id="date"
-        type="date"
-    >
+    <div class="form-grid">
 
-    <label for="time">
-        TIME
-    </label>
+        <label for="date">
+            DATE
+        </label>
 
-    <input
-        id="time"
-        type="time"
-    >
+        <input
+            id="date"
+            type="date"
+        >
+
+
+        <label for="time">
+            TIME
+        </label>
+
+        <input
+            id="time"
+            type="time"
+        >
+
+    </div>
+
 
     <button
         class="primary"
-        onclick="nextFromSchedule()"
+        onclick="nextStep()"
     >
+
         NEXT
-        <span>→</span>
+
+        <span class="arrow">
+            →
+        </span>
+
     </button>
+
 
     <button
         class="back"
         onclick="showScreen('welcome')"
     >
+
         ← BACK
+
     </button>
 
 </section>
 
 
-<!-- RESPONSE -->
+<!-- =====================================================
+     SCREEN 3
+===================================================== -->
 
-<section class="screen" id="message">
+<section
+    class="screen"
+    id="message"
+>
+
+    <div class="progress">
+
+        <div class="progress-bar active"></div>
+
+        <div class="progress-bar active"></div>
+
+        <div class="progress-bar"></div>
+
+    </div>
 
     <div class="eyebrow">
         STEP 02 // RESPONSE
     </div>
 
     <h2>
+
         ONE LAST<br>
         THING.
+
     </h2>
 
-    <label for="name">
-        NAME
-    </label>
 
-    <input
-        id="name"
-        type="text"
-        placeholder="Your name"
-    >
+    <div class="form-grid">
 
-    <label for="note">
-        MESSAGE
-    </label>
+        <label for="name">
+            NAME
+        </label>
 
-    <textarea
-        id="note"
-        rows="5"
-        placeholder="Anything you want to say..."
-    ></textarea>
+        <input
+            id="name"
+            type="text"
+            maxlength="80"
+            placeholder="Your name"
+        >
+
+
+        <label for="note">
+            MESSAGE
+        </label>
+
+        <textarea
+            id="note"
+            maxlength="1000"
+            placeholder="Anything you want to say..."
+        ></textarea>
+
+    </div>
+
 
     <button
         class="primary"
-        onclick="submitResponse()"
+        onclick="reviewResponse()"
     >
-        SUBMIT RESPONSE
-        <span>→</span>
+
+        REVIEW
+
+        <span class="arrow">
+            →
+        </span>
+
     </button>
+
 
     <button
         class="back"
         onclick="showScreen('schedule')"
     >
+
         ← BACK
+
     </button>
 
 </section>
 
 
-<!-- FINISHED -->
+<!-- =====================================================
+     SCREEN 4
+===================================================== -->
 
-<section class="screen" id="done">
+<section
+    class="screen"
+    id="review"
+>
 
-    <div class="check">
+    <div class="progress">
+
+        <div class="progress-bar active"></div>
+
+        <div class="progress-bar active"></div>
+
+        <div class="progress-bar active"></div>
+
+    </div>
+
+    <div class="eyebrow">
+        STEP 03 // CONFIRM
+    </div>
+
+    <h2>
+
+        CHECK<br>
+        DETAILS.
+
+    </h2>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <div class="summary-label">
+                NAME
+            </div>
+
+            <div
+                class="summary-value"
+                id="reviewName"
+            >
+            </div>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <div class="summary-label">
+                DATE
+            </div>
+
+            <div
+                class="summary-value"
+                id="reviewDate"
+            >
+            </div>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <div class="summary-label">
+                TIME
+            </div>
+
+            <div
+                class="summary-value"
+                id="reviewTime"
+            >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="primary"
+        onclick="submitResponse()"
+        id="submitButton"
+    >
+
+        CONFIRM RESPONSE
+
+        <span class="arrow">
+            →
+        </span>
+
+    </button>
+
+
+    <button
+        class="back"
+        onclick="showScreen('message')"
+    >
+
+        ← EDIT
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     SCREEN 5
+===================================================== -->
+
+<section
+    class="screen"
+    id="done"
+>
+
+    <div class="confirm-mark">
         ✓
     </div>
 
@@ -465,24 +1244,39 @@ footer {
     </div>
 
     <h2>
+
         LOCKED<br>
         IN.
+
     </h2>
 
-    <p>
-        Your response has been recorded
-        for this session.
+    <p class="description">
+
+        Your response has been received
+        for this invitation.
+
     </p>
 
-    <small>
-        Private response delivery will be
-        connected in the next setup step.
+    <small
+        style="
+            color:#666d73;
+            line-height:1.6;
+        "
+    >
+
+        Thank you.
+
     </small>
 
 </section>
 
+
 </main>
 
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
@@ -491,13 +1285,17 @@ footer {
     </span>
 
     <span>
-        01
+        001
     </span>
 
 </footer>
 
 
 <script>
+
+/* =====================================================
+   SCREEN NAVIGATION
+===================================================== */
 
 function showScreen(id) {
 
@@ -509,15 +1307,24 @@ function showScreen(id) {
 
         });
 
-    document
-        .getElementById(id)
-        .classList.add("active");
+    const destination =
+        document.getElementById(id);
 
-    window.scrollTo(0, 0);
+    destination.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
 }
 
 
-function nextFromSchedule() {
+/* =====================================================
+   DATE / TIME
+===================================================== */
+
+function nextStep() {
 
     const date =
         document.getElementById("date").value;
@@ -525,26 +1332,52 @@ function nextFromSchedule() {
     const time =
         document.getElementById("time").value;
 
-    if (!date || !time) {
+
+    if (!date) {
 
         alert(
-            "Please choose a date and time first."
+            "Please select a date."
         );
 
         return;
+
     }
 
+
+    if (!time) {
+
+        alert(
+            "Please select a time."
+        );
+
+        return;
+
+    }
+
+
     showScreen("message");
+
 }
 
 
-function submitResponse() {
+/* =====================================================
+   REVIEW
+===================================================== */
+
+function reviewResponse() {
 
     const name =
-        document.getElementById("name").value.trim();
+        document
+            .getElementById("name")
+            .value
+            .trim();
 
     const note =
-        document.getElementById("note").value.trim();
+        document
+            .getElementById("note")
+            .value
+            .trim();
+
 
     if (!name) {
 
@@ -553,7 +1386,9 @@ function submitResponse() {
         );
 
         return;
+
     }
+
 
     if (!note) {
 
@@ -562,22 +1397,112 @@ function submitResponse() {
         );
 
         return;
+
     }
 
+
+    const date =
+        document
+            .getElementById("date")
+            .value;
+
+    const time =
+        document
+            .getElementById("time")
+            .value;
+
+
+    const dateObject =
+        new Date(date + "T00:00:00");
+
+
+    const formattedDate =
+        dateObject.toLocaleDateString(
+            "en-US",
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+
+
+    const formattedTime =
+        new Date(
+            "1970-01-01T" + time
+        ).toLocaleTimeString(
+            "en-US",
+            {
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
+
+
+    document
+        .getElementById("reviewName")
+        .textContent = name;
+
+
+    document
+        .getElementById("reviewDate")
+        .textContent = formattedDate;
+
+
+    document
+        .getElementById("reviewTime")
+        .textContent = formattedTime;
+
+
+    showScreen("review");
+
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+function submitResponse() {
+
+    const button =
+        document.getElementById(
+            "submitButton"
+        );
+
+
+    button.disabled = true;
+
+    button.innerHTML =
+        "PROCESSING...";
+
+
     /*
-       DEMO ONLY
+       IMPORTANT:
 
-       We are NOT sending or storing
-       private responses yet.
+       This is still the FRONT END.
 
-       The secure response system
-       will be added separately.
+       No private response is being
+       transmitted to a server yet.
+
+       We will connect the secure
+       backend in the next stage.
     */
 
-    showScreen("done");
+
+    setTimeout(function() {
+
+        showScreen("done");
+
+    }, 900);
+
 }
 
 </script>
 
+
 </body>
+
 </html>
+```
